@@ -47,6 +47,9 @@ spec:
       {{ include "temporal.serviceAccount" $ }}
       {{- if or $.Values.cassandra.enabled (or $.Values.elasticsearch.enabled $.Values.elasticsearch.external)}}
       {{- if semverCompare ">=1.13.0" $.Chart.AppVersion}}
+      {{- if $.Values.server.priorityClassName }}
+      priorityClassName: {{ $.Values.server.priorityClassName }}
+      {{- end }}
       {{- with $.Values.server.securityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
